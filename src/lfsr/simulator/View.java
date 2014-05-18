@@ -2,13 +2,14 @@ package lfsr.simulator;
 
 import java.awt.event.ActionEvent;
 
-/**
+/*
  *
  * View.java
- * Purpose: Its called View, what do you think it does?
+ * Purpose: Its called View, what do you think it does? Ok, well its also
+ *          a controller.
  *
  * @author Adam Nunez, aanunez@uh.edu
- * @version 1.0 27 March 2014
+ * @version 1.2 17 May 2014
  *
  */
 
@@ -20,6 +21,43 @@ public class View extends javax.swing.JFrame {
         initComponents();
         initActionListeners();
         setLocationRelativeTo(null);
+        AboutTextArea.setText("This is a simulator for designing and     \n"
+                            + "understanding LFSRs.                      \n"
+                            + "                                          \n"
+                            + "This program was designed by Adam Nunez   \n"
+                            + "and is licensed under GPLv2.              \n"
+                            + "                                          \n"
+                            + "For question or comments please feel free \n"
+                            + "to contact me at...                       \n"
+                            + "adam.a.nunez@gmail.com                    \n"
+                            + "                                          \n"
+                            + "Source code is available here:            \n"
+                            + "github.com/aanunez/LFSR-Simulator         \n"
+                            + "                                          \n"
+                            + "This program is free software; you can    \n"
+                            + "redistribute it and/or modify it under the\n"
+                            + "terms of the GNU General Public License as\n"
+                            + "published by the Free Software Foundation;\n"
+                            + "either version 2 of the License, or (at   \n"
+                            + "your option) any later version.           \n"
+                            + "                                          \n"
+                            + "This program is distributed in the hope   \n"
+                            + "that it will be useful, but WITHOUT ANY   \n"
+                            + "WARRANTY; without even the implied        \n"
+                            + "warranty of MERCHANTABILITY or FITNESS FOR\n"
+                            + "A PARTICULAR PURPOSE. See the GNU General \n"
+                            + "Public License for more details           \n");
+
+    }
+    
+    private void generateButton(){
+        long generationTime = System.currentTimeMillis();
+        UpdateLFSRSettings();
+        UpdateTapsList();
+        UpdateSeqLength();
+        UpdateSeqList();
+        UpdateCode();
+        GenerationTimeTextArea.setText(Long.toString(System.currentTimeMillis()-generationTime)+" ms");
     }
 
     @SuppressWarnings("unchecked")
@@ -30,7 +68,7 @@ public class View extends javax.swing.JFrame {
         FeedbackRadioGroup = new javax.swing.ButtonGroup();
         TapSelectionGroup = new javax.swing.ButtonGroup();
         SeqLengthButtonGroup = new javax.swing.ButtonGroup();
-        jDialog1 = new javax.swing.JDialog();
+        BitDirection = new javax.swing.ButtonGroup();
         TapsTextArea = new javax.swing.JScrollPane();
         TapsList = new javax.swing.JList();
         GenerateButton = new javax.swing.JButton();
@@ -40,26 +78,31 @@ public class View extends javax.swing.JFrame {
         ManyToOneRadio = new javax.swing.JRadioButton();
         OneToManyRadio = new javax.swing.JRadioButton();
         BitsTextArea = new javax.swing.JTextField();
-        NumberOfBits = new java.awt.Label();
-        GateType = new java.awt.Label();
-        FeedbackType = new java.awt.Label();
-        TapSelection = new java.awt.Label();
-        SeqLength = new java.awt.Label();
+        NumberOfBitsLabel = new java.awt.Label();
+        GateTypeLabel = new java.awt.Label();
+        FeedbackTypeLabel = new java.awt.Label();
+        TapSelectionLabel = new java.awt.Label();
+        SeqLengthLabel = new java.awt.Label();
         n1RadioButton = new javax.swing.JRadioButton();
         nRadioButton = new javax.swing.JRadioButton();
         SequenceLength = new java.awt.Label();
         SeqLengthTextArea = new java.awt.Label();
         ManualRadio = new javax.swing.JRadioButton();
         AutoRadio = new javax.swing.JRadioButton();
+        SequenceLength1 = new java.awt.Label();
+        GenerationTimeTextArea = new java.awt.Label();
         LFSRSettings = new java.awt.Label();
         Taps = new java.awt.Label();
-        jPanel2 = new javax.swing.JPanel();
-        label8 = new java.awt.Label();
-        label9 = new java.awt.Label();
+        DisplaySettingsPanel = new javax.swing.JPanel();
+        UpperBoundLabel = new java.awt.Label();
+        LowerBoundLabel = new java.awt.Label();
         UpperTextArea = new javax.swing.JTextField();
         LowerTextArea = new javax.swing.JTextField();
         FullSeqCheckBox = new javax.swing.JCheckBox();
-        DisplaySettings = new java.awt.Label();
+        BitDirectionLabel = new java.awt.Label();
+        BitForward = new javax.swing.JRadioButton();
+        BitBackward = new javax.swing.JRadioButton();
+        DisplaySettingsLabel = new java.awt.Label();
         TabbedPane = new javax.swing.JTabbedPane();
         SequencePanel = new javax.swing.JPanel();
         SequenceScroll = new javax.swing.JScrollPane();
@@ -73,19 +116,15 @@ public class View extends javax.swing.JFrame {
         AHDLPanel = new javax.swing.JPanel();
         AHDLScroll = new javax.swing.JScrollPane();
         AHDLTextArea = new javax.swing.JTextArea();
-        MenuBar = new javax.swing.JMenuBar();
-        About = new javax.swing.JMenu();
-
-        javax.swing.GroupLayout jDialog1Layout = new javax.swing.GroupLayout(jDialog1.getContentPane());
-        jDialog1.getContentPane().setLayout(jDialog1Layout);
-        jDialog1Layout.setHorizontalGroup(
-            jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 455, Short.MAX_VALUE)
-        );
-        jDialog1Layout.setVerticalGroup(
-            jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 548, Short.MAX_VALUE)
-        );
+        AboutPanel = new javax.swing.JPanel();
+        AboutScroll = new javax.swing.JScrollPane();
+        AboutTextArea = new javax.swing.JTextArea();
+        CodeGenerationSettingsPanel = new javax.swing.JPanel();
+        IncludeResetCheckBox = new javax.swing.JCheckBox();
+        IncludeFlagCheckBox = new javax.swing.JCheckBox();
+        FlagOnCycleTextArea = new javax.swing.JTextField();
+        FlagOnCycleLabel = new java.awt.Label();
+        CodeGenerationSettingsLabel = new java.awt.Label();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("LFSR Simulator");
@@ -114,16 +153,16 @@ public class View extends javax.swing.JFrame {
 
         BitsTextArea.setText("15");
 
-        NumberOfBits.setText("Number of Bits:");
+        NumberOfBitsLabel.setText("Number of Bits:");
 
-        GateType.setText("Gate Type");
+        GateTypeLabel.setText("Gate Type");
 
-        FeedbackType.setName(""); // NOI18N
-        FeedbackType.setText("Feedback Type");
+        FeedbackTypeLabel.setName(""); // NOI18N
+        FeedbackTypeLabel.setText("Feedback Type");
 
-        TapSelection.setText("Tap Selection");
+        TapSelectionLabel.setText("Tap Selection");
 
-        SeqLength.setText("Seq Length");
+        SeqLengthLabel.setText("Seq Length");
 
         SeqLengthButtonGroup.add(n1RadioButton);
         n1RadioButton.setSelected(true);
@@ -143,6 +182,10 @@ public class View extends javax.swing.JFrame {
         AutoRadio.setSelected(true);
         AutoRadio.setText("Auto");
 
+        SequenceLength1.setText("Generation Time:");
+
+        GenerationTimeTextArea.setText("0");
+
         javax.swing.GroupLayout LFSRSettingsPanelLayout = new javax.swing.GroupLayout(LFSRSettingsPanel);
         LFSRSettingsPanel.setLayout(LFSRSettingsPanelLayout);
         LFSRSettingsPanelLayout.setHorizontalGroup(
@@ -151,29 +194,36 @@ public class View extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(LFSRSettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(LFSRSettingsPanelLayout.createSequentialGroup()
-                        .addComponent(NumberOfBits, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(BitsTextArea, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE))
+                        .addGroup(LFSRSettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(LFSRSettingsPanelLayout.createSequentialGroup()
+                                .addComponent(NumberOfBitsLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(BitsTextArea))
+                            .addGroup(LFSRSettingsPanelLayout.createSequentialGroup()
+                                .addGroup(LFSRSettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(TapSelectionLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(GateTypeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(XnorRadio)
+                                    .addComponent(XorRadio)
+                                    .addComponent(AutoRadio)
+                                    .addComponent(ManualRadio))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(LFSRSettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(ManyToOneRadio)
+                                    .addComponent(OneToManyRadio)
+                                    .addComponent(n1RadioButton)
+                                    .addComponent(nRadioButton)
+                                    .addComponent(SeqLengthLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(FeedbackTypeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(LFSRSettingsPanelLayout.createSequentialGroup()
                         .addGroup(LFSRSettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(TapSelection, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(GateType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(XnorRadio)
-                            .addComponent(XorRadio)
-                            .addComponent(AutoRadio)
-                            .addComponent(ManualRadio))
+                            .addComponent(SequenceLength, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(SequenceLength1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(LFSRSettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(ManyToOneRadio)
-                            .addComponent(OneToManyRadio)
-                            .addComponent(n1RadioButton)
-                            .addComponent(nRadioButton)
-                            .addComponent(SeqLength, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(FeedbackType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(LFSRSettingsPanelLayout.createSequentialGroup()
-                        .addComponent(SequenceLength, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(SeqLengthTextArea, javax.swing.GroupLayout.DEFAULT_SIZE, 65, Short.MAX_VALUE)))
+                            .addComponent(GenerationTimeTextArea, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(SeqLengthTextArea, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         LFSRSettingsPanelLayout.setVerticalGroup(
@@ -181,8 +231,8 @@ public class View extends javax.swing.JFrame {
             .addGroup(LFSRSettingsPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(LFSRSettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(GateType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(FeedbackType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(GateTypeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(FeedbackTypeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(LFSRSettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(LFSRSettingsPanelLayout.createSequentialGroup()
@@ -195,8 +245,8 @@ public class View extends javax.swing.JFrame {
                         .addComponent(OneToManyRadio)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(LFSRSettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(TapSelection, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(SeqLength, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(TapSelectionLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(SeqLengthLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(LFSRSettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(LFSRSettingsPanelLayout.createSequentialGroup()
@@ -209,13 +259,17 @@ public class View extends javax.swing.JFrame {
                         .addComponent(ManualRadio)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(LFSRSettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(NumberOfBits, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(BitsTextArea, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE))
+                    .addComponent(NumberOfBitsLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(BitsTextArea))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(LFSRSettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(SeqLengthTextArea, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE)
-                    .addComponent(SequenceLength, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE))
-                .addContainerGap())
+                .addGroup(LFSRSettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(SequenceLength, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(SeqLengthTextArea, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(LFSRSettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(SequenceLength1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(GenerationTimeTextArea, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(26, 26, 26))
         );
 
         LFSRSettings.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -227,11 +281,11 @@ public class View extends javax.swing.JFrame {
         Taps.setFont(new java.awt.Font("Dialog", 1, 12));
         Taps.setText("Taps");
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        DisplaySettingsPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        label8.setText("Upper Bound:");
+        UpperBoundLabel.setText("Upper Bound:");
 
-        label9.setText("Lower Bound:");
+        LowerBoundLabel.setText("Lower Bound:");
 
         UpperTextArea.setText("255");
 
@@ -239,68 +293,91 @@ public class View extends javax.swing.JFrame {
 
         FullSeqCheckBox.setText("Display Full Sequence");
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        BitDirectionLabel.setText("Bit Direction:");
+
+        BitDirection.add(BitForward);
+        BitForward.setSelected(true);
+        BitForward.setText("Forward");
+
+        BitDirection.add(BitBackward);
+        BitBackward.setText("Backward");
+
+        javax.swing.GroupLayout DisplaySettingsPanelLayout = new javax.swing.GroupLayout(DisplaySettingsPanel);
+        DisplaySettingsPanel.setLayout(DisplaySettingsPanelLayout);
+        DisplaySettingsPanelLayout.setHorizontalGroup(
+            DisplaySettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(DisplaySettingsPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(label8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(DisplaySettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(DisplaySettingsPanelLayout.createSequentialGroup()
+                        .addGroup(DisplaySettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(UpperBoundLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(LowerBoundLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(UpperTextArea, javax.swing.GroupLayout.DEFAULT_SIZE, 86, Short.MAX_VALUE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(label9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(LowerTextArea, javax.swing.GroupLayout.DEFAULT_SIZE, 86, Short.MAX_VALUE))
-                    .addComponent(FullSeqCheckBox))
-                .addContainerGap())
+                        .addGroup(DisplaySettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(UpperTextArea, javax.swing.GroupLayout.DEFAULT_SIZE, 71, Short.MAX_VALUE)
+                            .addComponent(LowerTextArea))
+                        .addContainerGap())
+                    .addGroup(DisplaySettingsPanelLayout.createSequentialGroup()
+                        .addGroup(DisplaySettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(FullSeqCheckBox)
+                            .addGroup(DisplaySettingsPanelLayout.createSequentialGroup()
+                                .addComponent(BitDirectionLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(DisplaySettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(BitForward)
+                                    .addComponent(BitBackward))))
+                        .addGap(10, 10, 10))))
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        DisplaySettingsPanelLayout.setVerticalGroup(
+            DisplaySettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(DisplaySettingsPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(DisplaySettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(DisplaySettingsPanelLayout.createSequentialGroup()
                         .addComponent(UpperTextArea, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(LowerTextArea, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(label8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(LowerTextArea, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(DisplaySettingsPanelLayout.createSequentialGroup()
+                        .addComponent(UpperBoundLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(label9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(LowerBoundLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(FullSeqCheckBox)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(DisplaySettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(DisplaySettingsPanelLayout.createSequentialGroup()
+                        .addComponent(BitForward)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(BitBackward))
+                    .addComponent(BitDirectionLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         FullSeqCheckBox.getAccessibleContext().setAccessibleName("");
 
-        DisplaySettings.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        DisplaySettings.setFont(new java.awt.Font("Dialog", 1, 12));
-        DisplaySettings.setName(""); // NOI18N
-        DisplaySettings.setText("Display Settings");
+        DisplaySettingsLabel.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        DisplaySettingsLabel.setFont(new java.awt.Font("Dialog", 1, 12));
+        DisplaySettingsLabel.setName(""); // NOI18N
+        DisplaySettingsLabel.setText("Display Settings");
 
         SequenceScroll.setBorder(null);
 
         SeqTextArea.setColumns(20);
-        SeqTextArea.setEditable(false);
         SeqTextArea.setRows(5);
-        SeqTextArea.setAlignmentX(0.0F);
-        SeqTextArea.setAlignmentY(0.0F);
-        SeqTextArea.setBorder(null);
         SequenceScroll.setViewportView(SeqTextArea);
 
         javax.swing.GroupLayout SequencePanelLayout = new javax.swing.GroupLayout(SequencePanel);
         SequencePanel.setLayout(SequencePanelLayout);
         SequencePanelLayout.setHorizontalGroup(
             SequencePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(SequenceScroll, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 364, Short.MAX_VALUE)
+            .addGroup(SequencePanelLayout.createSequentialGroup()
+                .addComponent(SequenceScroll, javax.swing.GroupLayout.PREFERRED_SIZE, 360, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         SequencePanelLayout.setVerticalGroup(
             SequencePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(SequenceScroll, javax.swing.GroupLayout.DEFAULT_SIZE, 458, Short.MAX_VALUE)
+            .addComponent(SequenceScroll, javax.swing.GroupLayout.DEFAULT_SIZE, 351, Short.MAX_VALUE)
         );
 
         TabbedPane.addTab("Sequence", SequencePanel);
@@ -315,11 +392,11 @@ public class View extends javax.swing.JFrame {
         VerilogPanel.setLayout(VerilogPanelLayout);
         VerilogPanelLayout.setHorizontalGroup(
             VerilogPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(VerilogScroll, javax.swing.GroupLayout.DEFAULT_SIZE, 364, Short.MAX_VALUE)
+            .addComponent(VerilogScroll, javax.swing.GroupLayout.DEFAULT_SIZE, 360, Short.MAX_VALUE)
         );
         VerilogPanelLayout.setVerticalGroup(
             VerilogPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(VerilogScroll, javax.swing.GroupLayout.DEFAULT_SIZE, 458, Short.MAX_VALUE)
+            .addComponent(VerilogScroll, javax.swing.GroupLayout.DEFAULT_SIZE, 351, Short.MAX_VALUE)
         );
 
         TabbedPane.addTab("Verilog", VerilogPanel);
@@ -334,11 +411,11 @@ public class View extends javax.swing.JFrame {
         VHDLPanel.setLayout(VHDLPanelLayout);
         VHDLPanelLayout.setHorizontalGroup(
             VHDLPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(VHDLScroll, javax.swing.GroupLayout.DEFAULT_SIZE, 364, Short.MAX_VALUE)
+            .addComponent(VHDLScroll, javax.swing.GroupLayout.DEFAULT_SIZE, 360, Short.MAX_VALUE)
         );
         VHDLPanelLayout.setVerticalGroup(
             VHDLPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(VHDLScroll, javax.swing.GroupLayout.DEFAULT_SIZE, 458, Short.MAX_VALUE)
+            .addComponent(VHDLScroll, javax.swing.GroupLayout.DEFAULT_SIZE, 351, Short.MAX_VALUE)
         );
 
         TabbedPane.addTab("VHDL", VHDLPanel);
@@ -353,19 +430,89 @@ public class View extends javax.swing.JFrame {
         AHDLPanel.setLayout(AHDLPanelLayout);
         AHDLPanelLayout.setHorizontalGroup(
             AHDLPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(AHDLScroll, javax.swing.GroupLayout.DEFAULT_SIZE, 364, Short.MAX_VALUE)
+            .addComponent(AHDLScroll, javax.swing.GroupLayout.DEFAULT_SIZE, 360, Short.MAX_VALUE)
         );
         AHDLPanelLayout.setVerticalGroup(
             AHDLPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(AHDLScroll, javax.swing.GroupLayout.DEFAULT_SIZE, 458, Short.MAX_VALUE)
+            .addComponent(AHDLScroll, javax.swing.GroupLayout.DEFAULT_SIZE, 351, Short.MAX_VALUE)
         );
 
         TabbedPane.addTab("AHDL", AHDLPanel);
 
-        About.setText("About");
-        MenuBar.add(About);
+        AboutScroll.setBorder(null);
 
-        setJMenuBar(MenuBar);
+        AboutTextArea.setColumns(20);
+        AboutTextArea.setRows(5);
+        AboutScroll.setViewportView(AboutTextArea);
+
+        javax.swing.GroupLayout AboutPanelLayout = new javax.swing.GroupLayout(AboutPanel);
+        AboutPanel.setLayout(AboutPanelLayout);
+        AboutPanelLayout.setHorizontalGroup(
+            AboutPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(AboutPanelLayout.createSequentialGroup()
+                .addComponent(AboutScroll, javax.swing.GroupLayout.PREFERRED_SIZE, 360, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+        AboutPanelLayout.setVerticalGroup(
+            AboutPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(AboutScroll, javax.swing.GroupLayout.DEFAULT_SIZE, 351, Short.MAX_VALUE)
+        );
+
+        TabbedPane.addTab("About", AboutPanel);
+
+        CodeGenerationSettingsPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        IncludeResetCheckBox.setText("Include Reset Code");
+        IncludeResetCheckBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                IncludeResetCheckBoxActionPerformed(evt);
+            }
+        });
+
+        IncludeFlagCheckBox.setText("Include Flag Code");
+        IncludeFlagCheckBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                IncludeFlagCheckBoxActionPerformed(evt);
+            }
+        });
+
+        FlagOnCycleTextArea.setText("0");
+
+        FlagOnCycleLabel.setText("Flag on Cycle #:");
+
+        javax.swing.GroupLayout CodeGenerationSettingsPanelLayout = new javax.swing.GroupLayout(CodeGenerationSettingsPanel);
+        CodeGenerationSettingsPanel.setLayout(CodeGenerationSettingsPanelLayout);
+        CodeGenerationSettingsPanelLayout.setHorizontalGroup(
+            CodeGenerationSettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(CodeGenerationSettingsPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(CodeGenerationSettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(IncludeResetCheckBox)
+                    .addComponent(IncludeFlagCheckBox)
+                    .addGroup(CodeGenerationSettingsPanelLayout.createSequentialGroup()
+                        .addComponent(FlagOnCycleLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(FlagOnCycleTextArea, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        CodeGenerationSettingsPanelLayout.setVerticalGroup(
+            CodeGenerationSettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(CodeGenerationSettingsPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(IncludeResetCheckBox)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(IncludeFlagCheckBox)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(CodeGenerationSettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(FlagOnCycleTextArea, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(FlagOnCycleLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        CodeGenerationSettingsLabel.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        CodeGenerationSettingsLabel.setFont(new java.awt.Font("Dialog", 1, 12));
+        CodeGenerationSettingsLabel.setName(""); // NOI18N
+        CodeGenerationSettingsLabel.setText("Code Generation Settings");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -374,44 +521,54 @@ public class View extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(DisplaySettings, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(111, 111, 111))
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(GenerateButton)
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(LFSRSettings, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(LFSRSettingsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(GenerateButton))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(3, 3, 3)
+                                .addComponent(LFSRSettings, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(LFSRSettingsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(CodeGenerationSettingsLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(DisplaySettingsLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(CodeGenerationSettingsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(DisplaySettingsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(Taps, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(TapsTextArea, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(TabbedPane)
+                    .addComponent(TapsTextArea, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(TabbedPane, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(Taps, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(TapsTextArea, javax.swing.GroupLayout.DEFAULT_SIZE, 456, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(DisplaySettings, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(LFSRSettings, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(LFSRSettingsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(TabbedPane, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addComponent(LFSRSettings, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(LFSRSettingsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(CodeGenerationSettingsLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(CodeGenerationSettingsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(DisplaySettingsLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(DisplaySettingsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(GenerateButton, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(TabbedPane, javax.swing.GroupLayout.Alignment.TRAILING, 0, 0, Short.MAX_VALUE))
-                .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addComponent(Taps, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(TapsTextArea, javax.swing.GroupLayout.PREFERRED_SIZE, 349, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         LFSRSettings.getAccessibleContext().setAccessibleDescription("");
@@ -419,114 +576,11 @@ public class View extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-
-    private void UpdateTapsList(){
-        lfsr.resetTimeOutFlag();
-        javax.swing.DefaultListModel model = new javax.swing.DefaultListModel();
-        if(AutoRadio.isSelected())
-             lfsr.setTaps(lfsr.getOptimizedTaps());
-        else{
-            int[] adjArray = TapsList.getSelectedIndices();
-            for(int i = 0; i < adjArray.length; i++)
-                adjArray[i] = adjArray[i] + 1;
-            lfsr.setTaps(adjArray);
-        }
-        for(int i = 1; i <= lfsr.getNumberOfBits(); i++)
-            model.addElement(i);
-        TapsList.clearSelection();
-        TapsList.setModel(model);
-        int[] adjArray = lfsr.getTaps().clone();
-        for(int i = 0; i < adjArray.length; i++)
-            adjArray[i] = adjArray[i] - 1;
-        TapsList.setSelectedIndices(adjArray);
-    }
-
-    private void UpdateSeqList(){
-        SeqTextArea.setText("");
-        lfsr.resetTimeOutFlag();
-        int start = 0;
-        int stop = 0;
-        if(FullSeqCheckBox.isSelected()){
-            start = 0;
-            stop = lfsr.getSeqLength();
-        } else{
-            start = getStart();
-            stop = getStop();
-        }
-        SeqTextArea.append(lfsr.getSeq(start, stop, false));
-        if(lfsr.getTimeOutFlag())
-            SeqTextArea.append("***Timeout Waring Occured***");
-        SeqTextArea.setCaretPosition(0);
-        lfsr.resetLFSR();
-    }
-
-    private void UpdateLFSRSettings(){
-        if(XorRadio.isSelected())
-            lfsr.setGateType("XOR");
-        else
-            lfsr.setGateType("XNOR");
-        if(ManyToOneRadio.isSelected())
-            lfsr.setFeedbackType("MANY2ONE");
-        else
-            lfsr.setFeedbackType("ONE2MANY");
-        if(nRadioButton.isSelected())
-            lfsr.setExtended(true);
-        else
-            lfsr.setExtended(false);
-        try{lfsr.setNumberOfBits(Integer.parseInt(BitsTextArea.getText()));}
-        catch(NumberFormatException e){ lfsr.setNumberOfBits(1);}
-        lfsr.resetLFSR();
-    }
-
-    private void UpdateCode(){
-        VerilogTextArea.setText(lfsr.toVerilog());
-        VHDLTextArea.setText(lfsr.toVHDL());
-        AHDLTextArea.setText(lfsr.toAHDL());
-    }
-
-    private int getStop(){
-        int stop = 0;
-        try{
-            if(Integer.parseInt(UpperTextArea.getText())>lfsr.getSeqLength())
-                stop = lfsr.getSeqLength();
-            else
-                stop = Integer.parseInt(UpperTextArea.getText());
-        }
-        catch(NumberFormatException e){
-            stop = lfsr.getSeqLength();
-        }
-        return stop;
-    }
-
-    private int getStart(){
-        int start = 0;
-        try{
-            if(Integer.parseInt(LowerTextArea.getText())<1)
-                start = 0;
-            else
-                start = Integer.parseInt(LowerTextArea.getText());
-        }
-        catch(NumberFormatException e){start = 0;}
-        return start;
-    }
-
-    private void generateButton(){
-        UpdateLFSRSettings();
-        UpdateTapsList();
-        UpdateSeqLength();
-        UpdateSeqList();
-        UpdateCode();
-    }
-
-    private void UpdateSeqLength(){
-        lfsr.getSeqLength();
-        if(lfsr.getTimeOutFlag())
-            SeqLengthTextArea.setText("Time Out");
-        else
-            SeqLengthTextArea.setText(Integer.toString(lfsr.getSeqLength()));
-    }
-
+     
+    //**********************************************
+    //Action Listeners
+    //**********************************************
+    
     private void initActionListeners(){
         addUpdateButtonListener(new java.awt.event.ActionListener() {
             @Override
@@ -565,42 +619,180 @@ public class View extends javax.swing.JFrame {
     private void addBitsTextAreaListener(java.awt.event.ActionListener BitsTextAreaListener){
         BitsTextArea.addActionListener(BitsTextAreaListener);
     }
+    
+    private void IncludeResetCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IncludeResetCheckBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_IncludeResetCheckBoxActionPerformed
+
+    private void IncludeFlagCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IncludeFlagCheckBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_IncludeFlagCheckBoxActionPerformed
+
+    //**********************************************
+    //Update Functions
+    //**********************************************
+    
+    private void UpdateTapsList(){
+        lfsr.resetTimeOutFlag();
+        javax.swing.DefaultListModel model = new javax.swing.DefaultListModel();
+        if(AutoRadio.isSelected())
+             lfsr.setTaps(lfsr.getOptimizedTaps());
+        else{
+            int[] adjArray = TapsList.getSelectedIndices();
+            for(int i = 0; i < adjArray.length; i++)
+                adjArray[i] = adjArray[i] + 1;
+            lfsr.setTaps(adjArray);
+        }
+        for(int i = 1; i <= lfsr.getNumberOfBits(); i++)
+            model.addElement(i);
+        TapsList.clearSelection();
+        TapsList.setModel(model);
+        int[] adjArray = lfsr.getTaps().clone();
+        for(int i = 0; i < adjArray.length; i++)
+            adjArray[i] = adjArray[i] - 1;
+        TapsList.setSelectedIndices(adjArray);
+    }
+
+    private void UpdateSeqList(){
+        SeqTextArea.setText("");
+        lfsr.resetTimeOutFlag();
+        int start, stop;
+        if(FullSeqCheckBox.isSelected()){
+            start = 0;
+            stop = lfsr.getSeqLength();
+        } else{
+            start = getStart();
+            stop = getStop();
+        }
+        SeqTextArea.append(lfsr.getSeq(start, stop, BitForward.isSelected()));
+        if(lfsr.getTimeOutFlag())
+            SeqTextArea.append("***Timeout Warning Occured***");
+        SeqTextArea.setCaretPosition(0);
+        lfsr.resetLFSR();
+    }
+
+    private void UpdateLFSRSettings(){
+        if(XorRadio.isSelected())
+            lfsr.setGateType("XOR");
+        else
+            lfsr.setGateType("XNOR");
+        if(ManyToOneRadio.isSelected())
+            lfsr.setFeedbackType("MANY2ONE");
+        else
+            lfsr.setFeedbackType("ONE2MANY");
+        if(nRadioButton.isSelected())
+            lfsr.setExtended(true);
+        else
+            lfsr.setExtended(false);
+        try{lfsr.setNumberOfBits(Integer.parseInt(BitsTextArea.getText()));}
+        catch(NumberFormatException e){ lfsr.setNumberOfBits(1);}
+        lfsr.resetLFSR();
+    }
+
+    private void UpdateCode(){
+        boolean IncludeReset = false;
+        boolean IncludeFlag = false;
+        if(IncludeResetCheckBox.isSelected())
+            IncludeReset = true;
+        if(IncludeFlagCheckBox.isSelected())
+            IncludeFlag = true;
+        VerilogTextArea.setText(lfsr.toVerilog(IncludeReset,IncludeFlag));
+        VHDLTextArea.setText(lfsr.toVHDL());
+        AHDLTextArea.setText(lfsr.toAHDL());
+        VerilogTextArea.setCaretPosition(0);
+        VHDLTextArea.setCaretPosition(0);
+        AHDLTextArea.setCaretPosition(0);
+    }
+
+    private void UpdateSeqLength(){
+        lfsr.getSeqLength();
+        if(lfsr.getTimeOutFlag())
+            SeqLengthTextArea.setText("Time Out");
+        else
+            SeqLengthTextArea.setText(Integer.toString(lfsr.getSeqLength()));
+    }
+    
+    //**********************************************
+    //Get Functions
+    //**********************************************
+    
+    private int getStop(){
+        int stop;
+        try{
+            if(Integer.parseInt(UpperTextArea.getText())>lfsr.getSeqLength())
+                stop = lfsr.getSeqLength();
+            else
+                stop = Integer.parseInt(UpperTextArea.getText());
+        }
+        catch(NumberFormatException e){
+            stop = lfsr.getSeqLength();
+        }
+        return stop;
+    }
+
+    private int getStart(){
+        int start;
+        try{
+            if(Integer.parseInt(LowerTextArea.getText())<1)
+                start = 0;
+            else
+                start = Integer.parseInt(LowerTextArea.getText());
+        }
+        catch(NumberFormatException e){start = 0;}
+        return start;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel AHDLPanel;
     private javax.swing.JScrollPane AHDLScroll;
     private javax.swing.JTextArea AHDLTextArea;
-    private javax.swing.JMenu About;
+    private javax.swing.JPanel AboutPanel;
+    private javax.swing.JScrollPane AboutScroll;
+    private javax.swing.JTextArea AboutTextArea;
     private javax.swing.JRadioButton AutoRadio;
+    private javax.swing.JRadioButton BitBackward;
+    private javax.swing.ButtonGroup BitDirection;
+    private java.awt.Label BitDirectionLabel;
+    private javax.swing.JRadioButton BitForward;
     private javax.swing.JTextField BitsTextArea;
-    private java.awt.Label DisplaySettings;
+    private java.awt.Label CodeGenerationSettingsLabel;
+    private javax.swing.JPanel CodeGenerationSettingsPanel;
+    private java.awt.Label DisplaySettingsLabel;
+    private javax.swing.JPanel DisplaySettingsPanel;
     private javax.swing.ButtonGroup FeedbackRadioGroup;
-    private java.awt.Label FeedbackType;
+    private java.awt.Label FeedbackTypeLabel;
+    private java.awt.Label FlagOnCycleLabel;
+    private javax.swing.JTextField FlagOnCycleTextArea;
     private javax.swing.JCheckBox FullSeqCheckBox;
     private javax.swing.ButtonGroup GateRadioGroup;
-    private java.awt.Label GateType;
+    private java.awt.Label GateTypeLabel;
     private javax.swing.JButton GenerateButton;
+    private java.awt.Label GenerationTimeTextArea;
+    private javax.swing.JCheckBox IncludeFlagCheckBox;
+    private javax.swing.JCheckBox IncludeResetCheckBox;
     private java.awt.Label LFSRSettings;
     private javax.swing.JPanel LFSRSettingsPanel;
+    private java.awt.Label LowerBoundLabel;
     private javax.swing.JTextField LowerTextArea;
     private javax.swing.JRadioButton ManualRadio;
     private javax.swing.JRadioButton ManyToOneRadio;
-    private javax.swing.JMenuBar MenuBar;
-    private java.awt.Label NumberOfBits;
+    private java.awt.Label NumberOfBitsLabel;
     private javax.swing.JRadioButton OneToManyRadio;
-    private java.awt.Label SeqLength;
     private javax.swing.ButtonGroup SeqLengthButtonGroup;
+    private java.awt.Label SeqLengthLabel;
     private java.awt.Label SeqLengthTextArea;
     private javax.swing.JTextArea SeqTextArea;
     private java.awt.Label SequenceLength;
+    private java.awt.Label SequenceLength1;
     private javax.swing.JPanel SequencePanel;
     private javax.swing.JScrollPane SequenceScroll;
     private javax.swing.JTabbedPane TabbedPane;
-    private java.awt.Label TapSelection;
     private javax.swing.ButtonGroup TapSelectionGroup;
+    private java.awt.Label TapSelectionLabel;
     private java.awt.Label Taps;
     private javax.swing.JList TapsList;
     private javax.swing.JScrollPane TapsTextArea;
+    private java.awt.Label UpperBoundLabel;
     private javax.swing.JTextField UpperTextArea;
     private javax.swing.JPanel VHDLPanel;
     private javax.swing.JScrollPane VHDLScroll;
@@ -610,10 +802,6 @@ public class View extends javax.swing.JFrame {
     private javax.swing.JTextArea VerilogTextArea;
     private javax.swing.JRadioButton XnorRadio;
     private javax.swing.JRadioButton XorRadio;
-    private javax.swing.JDialog jDialog1;
-    private javax.swing.JPanel jPanel2;
-    private java.awt.Label label8;
-    private java.awt.Label label9;
     private javax.swing.JRadioButton n1RadioButton;
     private javax.swing.JRadioButton nRadioButton;
     // End of variables declaration//GEN-END:variables

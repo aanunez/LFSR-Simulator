@@ -1,6 +1,6 @@
 package lfsr.simulator;
 
-/**
+/*
  * 
  * LFSR.java
  * Purpose: Simulates a XOR/XNOR, MANY-TO-ONE/ONE-TO-MANY LFSR.
@@ -9,7 +9,7 @@ package lfsr.simulator;
  *          http://fab.cba.mit.edu/classes/MIT/864.05/people/gdennis/
  *
  * @author Adam Nunez, aanunez@uh.edu
- * @version 1.1 4 May 2014
+ * @version 1.3 17 May 2014
  * 
  */
 
@@ -54,7 +54,7 @@ public final class LFSR {
     }
 
     public LFSR(){
-        this(1, new int[] {1}, "XOR", "MANY2ONE", false);
+        this(2, new int[] {1}, "XOR", "MANY2ONE", false);
     }
 
     public LFSR(int NumberOfBits, int[] Taps){
@@ -86,28 +86,36 @@ public final class LFSR {
     //**********************************************
 
     public boolean setGateType(String GateType){
-        if(GateType.toUpperCase().equals("XOR"))
-            Gate = XOR;
-        else if(GateType.toUpperCase().equals("XNOR"))
-            Gate = XNOR;
-        else
-            return false;
+        switch (GateType.toUpperCase()) {
+            case "XOR":
+                Gate = XOR;
+                break;
+            case "XNOR":
+                Gate = XNOR;
+                break;
+            default:
+                return false;
+        }
         return true;
     }
 
     public boolean setFeedbackType(String FeedbackType){
-        if(FeedbackType.toUpperCase().equals("ONE2MANY"))
-            Feedback = ONE2MANY;
-        else if(FeedbackType.toUpperCase().equals("MANY2ONE"))
-            Feedback = MANY2ONE;
-        else
-            return false;
+        switch (FeedbackType.toUpperCase()) {
+            case "ONE2MANY":
+                Feedback = ONE2MANY;
+                break;
+            case "MANY2ONE":
+                Feedback = MANY2ONE;
+                break;
+            default:
+                return false;
+        }
         return true;
     }
 
     public boolean setNumberOfBits(int NumberofBits){
         SeqLength = -1;
-        if(NumberofBits <= 0)
+        if(NumberofBits <= 1)
             return false;
         boolean initialValue = true;
         if(Gate == XNOR)
@@ -485,32 +493,78 @@ public final class LFSR {
     // To Language Functions
     //**********************************************
 
-    public String toVerilog(){
+    public String toVerilog(boolean IncludeReset, boolean IncludeFlag){
         StringBuilder Verilog = new StringBuilder();
-        Verilog .append("module LFSR(Clock, Q);")
+        String depth = "        ";
+        if(IncludeReset)
+            depth = "            ";
+        Verilog .append("module LFSR(Clock, ");
+        if(IncludeReset)
+            Verilog .append("Reset, ");
+        Verilog .append("Q);")
                 .append(System.getProperty("line.separator"))
                 .append("    input Clock;")
-                .append(System.getProperty("line.separator"))
-                .append("    output [").append(M).append(":0] Q;")
+                .append(System.getProperty("line.separator"));
+        if(IncludeReset)
+            Verilog .append("    input Reset;")
+                    .append(System.getProperty("line.separator"));
+        Verilog .append("    output [").append(M-1).append(":0] Q;")
                 .append(System.getProperty("line.separator"))
                 .append(System.getProperty("line.separator"))
                 .append("    reg [").append(M-1).append(":0] LFSR;")
                 .append(System.getProperty("line.separator"));
-        if(Feedback==ONE2MANY)
+        if(Feedback==ONE2MANY){
                 Verilog .append("    wire feedback = LFSR[")
-                        .append(M-1).append("];")
+                        .append(M-1).append("]");
+                if(Extended)
+                    Verilog .append("^(LFSR[")
+                            .append(M-2)
+                            .append(":0] == ")
+                            .append(M)
+                            .append("'b");
+                if(Gate == XNOR)
+                    for(int i=0; i<M ; i++)
+                        Verilog .append("0");
+                else{
+                    for(int i=0; i<M ; i++)
+                        Verilog .append("1");
+                }
+                Verilog .append(");")
                         .append(System.getProperty("line.separator"));
+        }
         Verilog .append(System.getProperty("line.separator"))
                 .append("    always @(posedge Clock) begin")
                 .append(System.getProperty("line.separator"));
+        if(IncludeReset){
+            Verilog .append("        if(Reset == 0) begin")
+                    .append(System.getProperty("line.separator"))
+                    .append("            LFSR <= ")
+                    .append(M)
+                    .append("'b");
+            if(Gate == XNOR)
+                for(int i=0; i<M ; i++)
+                    Verilog .append("0");
+            else{
+                for(int i=0; i<M ; i++)
+                    Verilog .append("1");
+            }
+            Verilog .append(";")
+                    .append(System.getProperty("line.separator"))
+                    .append("        end")
+                    .append(System.getProperty("line.separator"))
+                    .append("        else begin")
+                    .append(System.getProperty("line.separator"));
+        }
         switch(2*Gate+Feedback){
             case 0: //XOR,  ONE2MANY
             case 2: //XNOR, ONE2MANY
-                Verilog .append("        LFSR[0] <= feedback;")
+                Verilog .append(depth)
+                        .append("LFSR[0] <= feedback;")
                         .append(System.getProperty("line.separator"));
                 int j = 0;
                 for(int i = 0; i < M-1; i++){
-                     Verilog .append("        LFSR[")
+                     Verilog .append(depth)
+                             .append("LFSR[")
                              .append(i+1)
                              .append("] <= LFSR[")
                              .append(i)
@@ -527,15 +581,34 @@ public final class LFSR {
                 break;
             case 1: //XOR,  MANY2ONE
             case 3: //XNOR, MANY2ONE
-                Verilog.append("        LFSR[0] <=");
+                Verilog .append(depth)
+                        .append("LFSR[0] <=");
                 if(Gate==XNOR) Verilog.append(" ~");
                 else           Verilog.append(" ");
                 for(int i = 0; i < Taps.length; i++)
-                    Verilog.append("LFSR[").append(Taps[i]-1).append("] ^ ");
-                Verilog.delete(Verilog.length()-3,Verilog.length());
+                    Verilog.append("LFSR[").append(Taps[i]-1).append("] ^ "); 
+                if(Extended){
+                    Verilog .append("(LFSR[")
+                            .append(M-2)
+                            .append("] == ")
+                            .append(M)
+                            .append("'b");
+                    if(Gate==XNOR){
+                        for(int i=0; i<M ; i++)
+                            Verilog .append("1");
+                    }
+                    else{
+                        for(int i=0; i<M ; i++)
+                            Verilog .append("0");
+                    }
+                    Verilog .append(")");
+                }
+                else
+                    Verilog .delete(Verilog.length()-3,Verilog.length());
                 Verilog .append(";")
                         .append(System.getProperty("line.separator"))
-                        .append("        LFSR[")
+                        .append(depth)
+                        .append("LFSR[")
                         .append(M-1)
                         .append(":1] <= LFSR[")
                         .append(M-2)
@@ -543,6 +616,9 @@ public final class LFSR {
                         .append(System.getProperty("line.separator"));
                 break;
         }
+        if(IncludeReset)
+            Verilog .append("        end")
+                    .append(System.getProperty("line.separator"));
         Verilog .append("    end")
                 .append(System.getProperty("line.separator"))
                 .append(System.getProperty("line.separator"))
@@ -565,7 +641,9 @@ public final class LFSR {
     //**********************************************
 
     private String BitsToString(){
-        String x = java.util.Arrays.toString(Bits).replace("true", "1").replace("false", "0").replace(",","").replace(" ","");
+        String x = java.util.Arrays.toString(Bits)
+                .replace("true", "1").replace("false", "0")
+                .replace(",","").replace(" ","");
         return x.substring(1,x.length()-2);
     }
 

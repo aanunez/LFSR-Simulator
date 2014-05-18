@@ -1,14 +1,17 @@
 package lfsr.simulator;
 
-/**
+/*
  *
  * OptimalTaps.java
- * Purpose: Give a number of bits . Data is lifted
+ * Purpose: Give a number of bits for an LFSR the class returns the optimal
+ *          taps to insure maximum length. For all bit lengths there exists a 
+ *          tap solution and/or a four tap solution, in the case where both
+ *          exist the two tap solution in returned. Data is lifted
  *          from...
  *          http://www.eej.ulst.ac.uk/~ian/modules/EEE515/files/old_files/lfsr/lfsr_table.pdf
  *
  * @author Adam Nunez, aanunez@uh.edu
- * @version 1.0 27 March 2014
+ * @version 1.1 7 May 2014
  *
  */
 
@@ -16,8 +19,13 @@ public class OptimalTaps {
 
     public OptimalTaps(){}
 
+    /**
+     *
+     * @param NumberOfBits
+     * @return
+     */
     public int[][] getOptimalTaps(int NumberOfBits){
-        int [][] data = new int[2][4];
+        int [][] data;
         switch(NumberOfBits){
              case 2   : data = new int[][] {{2,1}};break;
              case 24  : data = new int[][] {{24,23,21,20}};break;
