@@ -41,30 +41,26 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="GenerateButton" alignment="0" min="-2" max="-2" attributes="1"/>
-                  <Group type="102" alignment="0" attributes="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
-                              <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
-                              <Component id="LFSRSettings" min="-2" max="-2" attributes="1"/>
-                          </Group>
-                          <Component id="LFSRSettingsPanel" alignment="0" min="-2" max="-2" attributes="1"/>
-                      </Group>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="CodeGenerationSettingsLabel" min="-2" max="-2" attributes="1"/>
-                          <Component id="DisplaySettingsLabel" alignment="0" min="-2" max="-2" attributes="1"/>
-                          <Component id="CodeGenerationSettingsPanel" alignment="0" max="32767" attributes="0"/>
-                          <Component id="DisplaySettingsPanel" alignment="0" min="-2" max="-2" attributes="0"/>
-                      </Group>
+                  <Group type="102" attributes="0">
+                      <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
+                      <Component id="LFSRSettings" min="-2" max="-2" attributes="1"/>
                   </Group>
+                  <Component id="LFSRSettingsPanel" alignment="0" min="-2" max="-2" attributes="1"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                  <Component id="CodeGenerationSettingsLabel" min="-2" max="-2" attributes="1"/>
+                  <Component id="DisplaySettingsLabel" alignment="0" min="-2" max="-2" attributes="1"/>
+                  <Component id="CodeGenerationSettingsPanel" alignment="0" max="32767" attributes="0"/>
+                  <Component id="DisplaySettingsPanel" alignment="0" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="Taps" min="-2" max="-2" attributes="1"/>
                   <Component id="TapsTextArea" min="-2" pref="42" max="-2" attributes="1"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="TabbedPane" max="-2" attributes="0"/>
+              <Component id="TabbedPane" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -73,33 +69,29 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                  <Component id="TabbedPane" alignment="0" max="-2" attributes="0"/>
-                  <Group type="102" alignment="0" attributes="0">
-                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="LFSRSettings" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="LFSRSettingsPanel" max="32767" attributes="1"/>
-                          </Group>
-                          <Group type="102" alignment="1" attributes="0">
-                              <Component id="CodeGenerationSettingsLabel" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="CodeGenerationSettingsPanel" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="DisplaySettingsLabel" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="DisplaySettingsPanel" min="-2" max="-2" attributes="1"/>
-                          </Group>
-                      </Group>
-                      <EmptySpace max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                  <Group type="102" attributes="0">
+                      <Component id="LFSRSettings" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
+                      <Component id="LFSRSettingsPanel" min="-2" max="-2" attributes="1"/>
+                      <EmptySpace max="-2" attributes="0"/>
                       <Component id="GenerateButton" min="-2" pref="37" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="Taps" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="TapsTextArea" min="-2" pref="349" max="-2" attributes="0"/>
+                      <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
+                      <Component id="TapsTextArea" max="32767" attributes="0"/>
                   </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="CodeGenerationSettingsLabel" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
+                      <Component id="CodeGenerationSettingsPanel" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="DisplaySettingsLabel" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
+                      <Component id="DisplaySettingsPanel" min="-2" max="-2" attributes="1"/>
+                  </Group>
+                  <Component id="TabbedPane" alignment="0" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="32767" attributes="0"/>
           </Group>
@@ -191,21 +183,21 @@
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace max="-2" attributes="0"/>
+                  <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="GateTypeLabel" min="-2" max="-2" attributes="0"/>
                       <Component id="FeedbackTypeLabel" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace max="-2" attributes="0"/>
+                  <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
                       <Group type="102" attributes="0">
                           <Component id="XorRadio" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                           <Component id="XnorRadio" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" attributes="0">
                           <Component id="ManyToOneRadio" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
                           <Component id="OneToManyRadio" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -214,16 +206,15 @@
                       <Component id="TapSelectionLabel" min="-2" max="-2" attributes="0"/>
                       <Component id="SeqLengthLabel" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
-                      <Group type="102" attributes="0">
-                          <Component id="n1RadioButton" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
-                      </Group>
                       <Component id="nRadioButton" min="-2" max="-2" attributes="0"/>
                       <Group type="102" attributes="0">
-                          <Component id="AutoRadio" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="AutoRadio" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="n1RadioButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
                           <Component id="ManualRadio" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -242,7 +233,7 @@
                       <Component id="SequenceLength1" max="32767" attributes="1"/>
                       <Component id="GenerationTimeTextArea" max="32767" attributes="1"/>
                   </Group>
-                  <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -559,15 +550,12 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <Component id="SequenceScroll" min="-2" pref="360" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                  </Group>
+                  <Component id="SequenceScroll" alignment="0" pref="373" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="SequenceScroll" alignment="0" pref="351" max="32767" attributes="0"/>
+                  <Component id="SequenceScroll" alignment="0" pref="284" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
           </Layout>
@@ -606,12 +594,12 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="VerilogScroll" alignment="0" pref="360" max="32767" attributes="0"/>
+                  <Component id="VerilogScroll" alignment="0" pref="373" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="VerilogScroll" alignment="0" pref="351" max="32767" attributes="0"/>
+                  <Component id="VerilogScroll" alignment="0" pref="284" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
           </Layout>
@@ -650,12 +638,12 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="VHDLScroll" alignment="0" pref="360" max="32767" attributes="0"/>
+                  <Component id="VHDLScroll" alignment="0" pref="373" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="VHDLScroll" alignment="0" pref="351" max="32767" attributes="0"/>
+                  <Component id="VHDLScroll" alignment="0" pref="284" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
           </Layout>
@@ -694,12 +682,12 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="AHDLScroll" alignment="0" pref="360" max="32767" attributes="0"/>
+                  <Component id="AHDLScroll" alignment="0" pref="373" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="AHDLScroll" alignment="0" pref="351" max="32767" attributes="0"/>
+                  <Component id="AHDLScroll" alignment="0" pref="284" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
           </Layout>
@@ -726,6 +714,50 @@
             </Container>
           </SubComponents>
         </Container>
+        <Container class="javax.swing.JPanel" name="MyHDLPanel">
+          <Constraints>
+            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
+              <JTabbedPaneConstraints tabName="MyHDL">
+                <Property name="tabTitle" type="java.lang.String" value="MyHDL"/>
+              </JTabbedPaneConstraints>
+            </Constraint>
+          </Constraints>
+
+          <Layout>
+            <DimensionLayout dim="0">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="MyHDLScroll" alignment="0" pref="373" max="32767" attributes="0"/>
+              </Group>
+            </DimensionLayout>
+            <DimensionLayout dim="1">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="MyHDLScroll" alignment="0" pref="284" max="32767" attributes="0"/>
+              </Group>
+            </DimensionLayout>
+          </Layout>
+          <SubComponents>
+            <Container class="javax.swing.JScrollPane" name="MyHDLScroll">
+              <Properties>
+                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                  <Border info="null"/>
+                </Property>
+              </Properties>
+              <AuxValues>
+                <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+              </AuxValues>
+
+              <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+              <SubComponents>
+                <Component class="javax.swing.JTextArea" name="MyHDLTextArea">
+                  <Properties>
+                    <Property name="columns" type="int" value="20"/>
+                    <Property name="rows" type="int" value="5"/>
+                  </Properties>
+                </Component>
+              </SubComponents>
+            </Container>
+          </SubComponents>
+        </Container>
         <Container class="javax.swing.JPanel" name="AboutPanel">
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
@@ -738,15 +770,12 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <Component id="AboutScroll" min="-2" pref="360" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                  </Group>
+                  <Component id="AboutScroll" alignment="0" pref="373" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="AboutScroll" alignment="0" pref="351" max="32767" attributes="0"/>
+                  <Component id="AboutScroll" alignment="0" pref="284" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
           </Layout>
@@ -838,7 +867,7 @@
         </Component>
         <Component class="javax.swing.JTextField" name="FlagOnCycleTextArea">
           <Properties>
-            <Property name="text" type="java.lang.String" value="0"/>
+            <Property name="text" type="java.lang.String" value="25000"/>
           </Properties>
         </Component>
         <Component class="java.awt.Label" name="FlagOnCycleLabel">

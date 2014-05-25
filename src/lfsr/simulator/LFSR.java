@@ -8,11 +8,10 @@ package lfsr.simulator;
  *          for this project comes from...
  *          http://fab.cba.mit.edu/classes/MIT/864.05/people/gdennis/
  *
- * @author Adam Nunez, aanunez@uh.edu
+ * @author Adam Nunez, adam.a.nunez@gmail.com
  * @version 1.3 17 May 2014
  * 
  */
-
 public final class LFSR {
 
     private static final char XOR = 0;
@@ -493,20 +492,36 @@ public final class LFSR {
     // To Language Functions
     //**********************************************
 
-    public String toVerilog(boolean IncludeReset, boolean IncludeFlag){
+    public String toVerilog(boolean IncludeReset, boolean IncludeFlag, int CycleNumb){
         StringBuilder Verilog = new StringBuilder();
         String depth = "        ";
+        String flagseq = "INITILIZE";
+        if(IncludeFlag){
+            if(CycleNumb > getSeqLength())
+                flagseq = "ERROR";
+            else{
+                resetLFSR();
+                for (int i = 0; i < CycleNumb; i++)
+                    strobeClock();
+                flagseq = getBitsForward();
+            }
+        }
         if(IncludeReset)
             depth = "            ";
         Verilog .append("module LFSR(Clock, ");
         if(IncludeReset)
             Verilog .append("Reset, ");
+        if(IncludeFlag)
+            Verilog .append("Flag, ");
         Verilog .append("Q);")
                 .append(System.getProperty("line.separator"))
                 .append("    input Clock;")
                 .append(System.getProperty("line.separator"));
         if(IncludeReset)
             Verilog .append("    input Reset;")
+                    .append(System.getProperty("line.separator"));
+        if(IncludeFlag)
+            Verilog .append("    output Flag;")
                     .append(System.getProperty("line.separator"));
         Verilog .append("    output [").append(M-1).append(":0] Q;")
                 .append(System.getProperty("line.separator"))
@@ -549,8 +564,12 @@ public final class LFSR {
                     Verilog .append("1");
             }
             Verilog .append(";")
-                    .append(System.getProperty("line.separator"))
-                    .append("        end")
+                    .append(System.getProperty("line.separator"));
+            if(IncludeFlag)
+                Verilog .append(depth)
+                        .append("Flag <= 0;")
+                        .append(System.getProperty("line.separator"));
+            Verilog .append("        end")
                     .append(System.getProperty("line.separator"))
                     .append("        else begin")
                     .append(System.getProperty("line.separator"));
@@ -616,6 +635,18 @@ public final class LFSR {
                         .append(System.getProperty("line.separator"));
                 break;
         }
+        if(IncludeFlag){
+            Verilog .append(depth)
+                    .append("if(LFSR == ")
+                    .append(M)
+                    .append("'b")
+                    .append(flagseq)
+                    .append(")")
+                    .append(System.getProperty("line.separator"))
+                    .append(depth).append("    ")
+                    .append("Flag <= 1;")
+                    .append(System.getProperty("line.separator"));
+        }
         if(IncludeReset)
             Verilog .append("        end")
                     .append(System.getProperty("line.separator"));
@@ -633,6 +664,10 @@ public final class LFSR {
     }
 
     public String toAHDL(){
+        return "Work in progress...";
+    }
+    
+    public String toMyHDL(){
         return "Work in progress...";
     }
 

@@ -10,7 +10,7 @@ package lfsr.simulator;
  *          from...
  *          http://www.eej.ulst.ac.uk/~ian/modules/EEE515/files/old_files/lfsr/lfsr_table.pdf
  *
- * @author Adam Nunez, aanunez@uh.edu
+ * @author Adam Nunez, adam.a.nunez@gmail.com
  * @version 1.1 7 May 2014
  *
  */
@@ -20,9 +20,10 @@ public class OptimalTaps {
     public OptimalTaps(){}
 
     /**
-     *
-     * @param NumberOfBits
-     * @return
+     * Find the optimal taps for an LFSR to insure maximum count length.
+     * @param   NumberOfBits    The number of bits in the LFSR
+     * @return  A integer array containing two or four elements that describe
+     *          the optimal taps for the LFSR.
      */
     public int[][] getOptimalTaps(int NumberOfBits){
         int [][] data;

@@ -9,7 +9,7 @@ import javax.swing.UnsupportedLookAndFeelException;
  *          Verilog, VHDL, and AHDL. It entered beta on the 
  *          27th of March 2014.
  *
- * @author Adam Nunez, aanunez@uh.edu
+ * @author Adam Nunez, adam.a.nunez@gmail.com
  * @version 1.1 7 May 2014
  *
  */
@@ -29,8 +29,9 @@ public class LFSRSimulator {
     }
 
     //To do:
-    // Verilog (flag)
     // AHDL
     // VHDL
+    // MyHDL
+    // Proper Docs
     // Image of circuit?
 }
