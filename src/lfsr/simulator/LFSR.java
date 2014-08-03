@@ -36,20 +36,16 @@ public final class LFSR {
     private boolean StrobeExtendedRestoreFlag;
     private boolean StrobeExtendedOnceFlag;
 
-    OptimalTaps OpTaps = new OptimalTaps();
-
     //**********************************************
     //Constructors
     //**********************************************
 
     public LFSR(int NumberOfBits, int[] Taps, String GateType, String FeedbackType, boolean isExtended){
-        if(!setGateType(GateType) || !setFeedbackType(FeedbackType) || !setNumberOfBits(NumberOfBits) || !setTaps(Taps))
+        if( !setNumberOfBits(NumberOfBits) || !setTaps(Taps) || !setGateType(GateType) || !setFeedbackType(FeedbackType) )
             throw new IllegalArgumentException("Failed to initilize an LFSR class.");
+        Extended = isExtended;
         SeqLength = -1;
-        Extended = false;
-        Position = 0;
-        StrobeExtendedRestoreFlag = false;
-        StrobeExtendedOnceFlag = false;
+        resetLFSR();
     }
 
     public LFSR(){
@@ -207,7 +203,7 @@ public final class LFSR {
     }
 
     public int[] getOptimizedTaps(int NumberOfBits){
-        int[][] x = OpTaps.getOptimalTaps(NumberOfBits);
+        int[][] x = OptimalTaps.getOptimalTaps(NumberOfBits);
         return x[0];
     }
 

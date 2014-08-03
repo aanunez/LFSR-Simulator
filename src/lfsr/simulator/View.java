@@ -1,7 +1,5 @@
 package lfsr.simulator;
 
-import java.awt.event.ActionEvent;
-
 /*
  *
  * View.java
@@ -19,7 +17,6 @@ public class View extends javax.swing.JFrame {
 
     public View() {
         initComponents();
-        initActionListeners();
         setLocationRelativeTo(null);
         generateButton();
         AboutTextArea.setText("This is a simulator for designing and     \n"
@@ -137,6 +134,11 @@ public class View extends javax.swing.JFrame {
         TapsTextArea.setViewportView(TapsList);
 
         GenerateButton.setText("Generate");
+        GenerateButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                GenerateButtonActionPerformed(evt);
+            }
+        });
 
         LFSRSettingsPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
@@ -156,6 +158,11 @@ public class View extends javax.swing.JFrame {
         OneToManyRadio.setText("One to Many");
 
         BitsTextArea.setText("15");
+        BitsTextArea.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BitsTextAreaActionPerformed(evt);
+            }
+        });
 
         NumberOfBitsLabel.setText("Number of Bits:");
 
@@ -295,6 +302,11 @@ public class View extends javax.swing.JFrame {
         LowerTextArea.setText("0");
 
         FullSeqCheckBox.setText("Display Full Sequence");
+        FullSeqCheckBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                FullSeqCheckBoxActionPerformed(evt);
+            }
+        });
 
         BitDirectionLabel.setText("Bit Direction:");
 
@@ -595,45 +607,6 @@ public class View extends javax.swing.JFrame {
     //Action Listeners
     //**********************************************
     
-    private void initActionListeners(){
-        addUpdateButtonListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                generateButton();
-            }
-        });
-
-        addFullSeqCheckBoxListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                LowerTextArea.setEditable(FullSeqCheckBox.isSelected() == false);
-                UpperTextArea.setEditable(FullSeqCheckBox.isSelected() == false);
-            }
-        });
-
-        addBitsTextAreaListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try{lfsr.setNumberOfBits(Integer.parseInt(BitsTextArea.getText()));}
-                catch(NumberFormatException f){lfsr.setNumberOfBits(1);}
-                UpdateTapsList();
-                UpdateSeqLength();
-            }
-        });
-    }
-
-    private void addUpdateButtonListener(java.awt.event.ActionListener UpdateButtonListener){
-        GenerateButton.addActionListener(UpdateButtonListener);
-    }
-
-    private void addFullSeqCheckBoxListener(java.awt.event.ActionListener FullSeqCheckBoxListener){
-        FullSeqCheckBox.addActionListener(FullSeqCheckBoxListener);
-    }
-
-    private void addBitsTextAreaListener(java.awt.event.ActionListener BitsTextAreaListener){
-        BitsTextArea.addActionListener(BitsTextAreaListener);
-    }
-    
     private void IncludeResetCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IncludeResetCheckBoxActionPerformed
         UpdateCode();
     }//GEN-LAST:event_IncludeResetCheckBoxActionPerformed
@@ -641,6 +614,26 @@ public class View extends javax.swing.JFrame {
     private void IncludeFlagCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IncludeFlagCheckBoxActionPerformed
         UpdateCode();
     }//GEN-LAST:event_IncludeFlagCheckBoxActionPerformed
+
+    private void GenerateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GenerateButtonActionPerformed
+        generateButton();
+    }//GEN-LAST:event_GenerateButtonActionPerformed
+
+    private void FullSeqCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FullSeqCheckBoxActionPerformed
+        LowerTextArea.setEditable(FullSeqCheckBox.isSelected() == false);
+        UpperTextArea.setEditable(FullSeqCheckBox.isSelected() == false);
+    }//GEN-LAST:event_FullSeqCheckBoxActionPerformed
+
+    private void BitsTextAreaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BitsTextAreaActionPerformed
+        try{
+            lfsr.setNumberOfBits(Integer.parseInt(BitsTextArea.getText()));
+        }
+        catch(NumberFormatException f){
+            lfsr.setNumberOfBits(1);
+        }
+        UpdateTapsList();
+        UpdateSeqLength();
+    }//GEN-LAST:event_BitsTextAreaActionPerformed
 
     //**********************************************
     //Update Functions

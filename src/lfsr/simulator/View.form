@@ -119,6 +119,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Generate"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="GenerateButtonActionPerformed"/>
+      </Events>
     </Component>
     <Container class="javax.swing.JPanel" name="LFSRSettingsPanel">
       <Properties>
@@ -280,6 +283,9 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="15"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BitsTextAreaActionPerformed"/>
+          </Events>
         </Component>
         <Component class="java.awt.Label" name="NumberOfBitsLabel">
           <Properties>
@@ -494,6 +500,9 @@
           <AccessibilityProperties>
             <Property name="AccessibleContext.accessibleName" type="java.lang.String" value=""/>
           </AccessibilityProperties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="FullSeqCheckBoxActionPerformed"/>
+          </Events>
         </Component>
         <Component class="java.awt.Label" name="BitDirectionLabel">
           <Properties>

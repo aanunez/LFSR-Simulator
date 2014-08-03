@@ -24,3 +24,6 @@ nbproject/*
 *.swp
 *.DS_Store
 *.lock
+
+#silly txt file
+!dist/README.TXT
