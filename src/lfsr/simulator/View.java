@@ -58,7 +58,6 @@ public class View extends javax.swing.JFrame {
                             + "warranty of MERCHANTABILITY or FITNESS FOR\n"
                             + "A PARTICULAR PURPOSE. See the GNU General \n"
                             + "Public License for more details           \n");
-
     }
     
     private void generateButton(){
@@ -679,12 +678,12 @@ public class View extends javax.swing.JFrame {
         int start, stop;
         if(FullSeqCheckBox.isSelected()){
             start = 0;
-            stop = lfsr.getSeqLength();
+            stop = lfsr.getSequenceLength();
         } else{
             start = getStart();
             stop = getStop();
         }
-        SeqTextArea.append(lfsr.getSeq(start, stop, BitForward.isSelected()));
+        SeqTextArea.append(lfsr.getBitSequence(start, stop, BitForward.isSelected()));
         if(lfsr.getTimeOutFlag())
             SeqTextArea.append("***Timeout Warning Occured***");
         SeqTextArea.setCaretPosition(0);
@@ -693,13 +692,13 @@ public class View extends javax.swing.JFrame {
 
     private void UpdateLFSRSettings(){
         if(XorRadio.isSelected())
-            lfsr.setGateType("XOR");
+            lfsr.setGateType(GateType.XOR);
         else
-            lfsr.setGateType("XNOR");
+            lfsr.setGateType(GateType.XNOR);
         if(ManyToOneRadio.isSelected())
-            lfsr.setFeedbackType("MANY2ONE");
+            lfsr.setFeedbackType(FeedbackType.MANY2ONE);
         else
-            lfsr.setFeedbackType("ONE2MANY");
+            lfsr.setFeedbackType(FeedbackType.ONE2MANY);
         if(nRadioButton.isSelected())
             lfsr.setExtended(true);
         else
@@ -727,11 +726,11 @@ public class View extends javax.swing.JFrame {
     }
 
     private void UpdateSeqLength(){
-        lfsr.getSeqLength();
+        lfsr.getSequenceLength();
         if(lfsr.getTimeOutFlag())
             SeqLengthTextArea.setText("Time Out");
         else
-            SeqLengthTextArea.setText(Integer.toString(lfsr.getSeqLength()));
+            SeqLengthTextArea.setText(Integer.toString(lfsr.getSequenceLength()));
     }
     
     //**********************************************
@@ -741,13 +740,13 @@ public class View extends javax.swing.JFrame {
     private int getStop(){
         int stop;
         try{
-            if(Integer.parseInt(UpperTextArea.getText())>lfsr.getSeqLength())
-                stop = lfsr.getSeqLength();
+            if(Integer.parseInt(UpperTextArea.getText())>lfsr.getSequenceLength())
+                stop = lfsr.getSequenceLength();
             else
                 stop = Integer.parseInt(UpperTextArea.getText());
         }
         catch(NumberFormatException e){
-            stop = lfsr.getSeqLength();
+            stop = lfsr.getSequenceLength();
         }
         return stop;
     }

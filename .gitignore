@@ -1,22 +1,7 @@
-# Thanks to github.com/niclashoyer/ for this file
-#################
-## Net Beans
-#################
-
-#ant specific
-#dist/ Distribution Included
+# Stuff no one wants
 build/
- 
-#netbeans specific
-core
-nbproject/*
-!nbproject/project.properties
-!nbproject/project.xml
- 
-#java specific
+nbproject/private/
 *.class
- 
-#general swap/backup files
 *.so
 *.log
 *.out
@@ -24,6 +9,4 @@ nbproject/*
 *.swp
 *.DS_Store
 *.lock
-
-#silly txt file
-!dist/README.TXT
+*.txt

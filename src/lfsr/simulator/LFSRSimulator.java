@@ -28,13 +28,17 @@ import javax.swing.UnsupportedLookAndFeelException;
  */
 
 public class LFSRSimulator {
+    
+    public static void prnt( String val ){
+        System.out.println(val);
+    }
+    
     public static void main(String[] args) {
-        try{
+        try {
             javax.swing.UIManager.setLookAndFeel(
                     javax.swing.UIManager.getSystemLookAndFeelClassName()
             );
-        }
-        catch (ClassNotFoundException | InstantiationException | 
+        } catch (ClassNotFoundException | InstantiationException | 
                IllegalAccessException | UnsupportedLookAndFeelException e){}
 
         View view = new View();
