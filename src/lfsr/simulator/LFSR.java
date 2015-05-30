@@ -215,7 +215,7 @@ public class LFSR {
                 return "timeout";
         }
         StringBuilder text = new StringBuilder();
-        for(int i = start; i < stop; i++) {
+        for(int i = start; i <= stop; i++) {
             text.append(i)
                 .append("\t");
             if (bitDirection)

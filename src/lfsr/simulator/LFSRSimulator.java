@@ -41,7 +41,7 @@ public class LFSRSimulator {
         view.setVisible(true);
     }
 
-    //To do:
+    //To do: (but not rly)
     // AHDL
     // VHDL
     // MyHDL

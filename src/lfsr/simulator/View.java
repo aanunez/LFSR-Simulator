@@ -386,7 +386,7 @@ public class View extends javax.swing.JFrame {
         DisplaySettingsLabel.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         DisplaySettingsLabel.setFont(new java.awt.Font("Dialog", 1, 12));
         DisplaySettingsLabel.setName(""); // NOI18N
-        DisplaySettingsLabel.setText("Display Settings");
+        DisplaySettingsLabel.setText("Sequence Display Settings");
 
         SequenceScroll.setBorder(null);
 
@@ -610,6 +610,7 @@ public class View extends javax.swing.JFrame {
         );
 
         LFSRSettings.getAccessibleContext().setAccessibleDescription("");
+        DisplaySettingsLabel.getAccessibleContext().setAccessibleDescription("");
         TabbedPane.getAccessibleContext().setAccessibleName("SequenceTextArea");
 
         pack();
@@ -740,26 +741,22 @@ public class View extends javax.swing.JFrame {
     private int getStop() {
         int stop;
         try {
-            if (Integer.parseInt(UpperTextArea.getText())>lfsr.getSequenceLength())
-                stop = lfsr.getSequenceLength();
-            else
-                stop = Integer.parseInt(UpperTextArea.getText());
+            stop = Integer.parseInt(UpperTextArea.getText());
+            if (stop>lfsr.getSequenceLength()-1)
+                stop = lfsr.getSequenceLength()-1;
         }
-        catch (NumberFormatException e) {
-            stop = lfsr.getSequenceLength();
-        }
+        catch (NumberFormatException e) { stop = lfsr.getSequenceLength()-1; }
         return stop;
     }
 
     private int getStart() {
         int start;
         try {
-            if (Integer.parseInt(LowerTextArea.getText())<1)
+            start = Integer.parseInt(LowerTextArea.getText());
+            if (start<1)
                 start = 0;
-            else
-                start = Integer.parseInt(LowerTextArea.getText());
         }
-        catch (NumberFormatException e) {start = 0;}
+        catch (NumberFormatException e) { start = 0; }
         return start;
     }
 
