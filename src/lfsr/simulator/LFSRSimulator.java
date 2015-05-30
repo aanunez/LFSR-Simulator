@@ -51,4 +51,5 @@ public class LFSRSimulator {
     // MyHDL
     // Proper Docs
     // Image of circuit?
+    // Set init val in gui
 }

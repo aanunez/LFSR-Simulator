@@ -10,6 +10,8 @@ Files
 * LFSRSimulator.java - The main file.
 * OptimalTaps.java - Contains static data for the selection of optimal taps in the LFSR.
 * View.java - GUI and controller code.
+* GateType - Enum defining the two valid gate types.
+* FeedbackType - Enum define the two valid feedback types.
 
 Features
 --------
@@ -18,7 +20,7 @@ Features
 * LFSRs can be XOR or XNOR, extended or not, many to one or one to many.
 * Automatic tap selection to insure longest possible sequence or manual.
 * Number of bits can be altered to find the resulting sequence length before displaying the sequence.
-* Code generation for Verilog, VHDL, AHDL, MyHDL. (NOT COMPLETE)
+* Code generation for Verilog, VHDL, AHDL, MyHDL. (Verilog complete, others not)
 
 Wait, Whats an LFSR?
 --------------------

@@ -38,7 +38,7 @@ public class LFSR {
     private int Position = 0;
     private boolean Extended = false;
 
-    private static final int ACCEPTABLE_RUN_TIME = 5000;
+    private static final int ACCEPTABLE_RUN_TIME = 50000000;
     private long TimeOut;
     private boolean TimeOutFlag;
 
@@ -118,19 +118,11 @@ public class LFSR {
     public final boolean setTaps(int[] NewTaps) {
         SeqLength = -1;
         if ( NewTaps.length == 0 )
-            Taps = getOptimizedTaps();
-        else {
-            java.util.Arrays.sort( NewTaps );
-            if ( NewTaps[0] == 0 )
-                return false;
-            int tmp;
-            for(int i = 0; i < NewTaps.length / 2; i++) {
-                tmp = NewTaps[i];
-                NewTaps[i] = NewTaps[NewTaps.length - i - 1];
-                NewTaps[NewTaps.length - i - 1] = tmp;
-            }
-            Taps = NewTaps;
-        }
+            NewTaps = getOptimizedTaps();
+        java.util.Arrays.sort( NewTaps );
+        if ( NewTaps[0] == 0 )
+            return false;
+        Taps = NewTaps;
         return true;
     }
 
@@ -293,9 +285,6 @@ public class LFSR {
     }
 
     public void strobeClock() {
-        System.out.println(this.getBitsForward());
-        if (Gate == GateType.XOR && Feedback == FeedbackType.ONE2MANY) 
-            System.out.println("ok, we are kosher");
         if (Extended && preStrobeExtended()) 
             return;
         if (Gate == GateType.XOR) {
