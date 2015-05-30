@@ -29,10 +29,6 @@ import javax.swing.UnsupportedLookAndFeelException;
 
 public class LFSRSimulator {
     
-    public static void prnt( String val ){
-        System.out.println(val);
-    }
-    
     public static void main(String[] args) {
         try {
             javax.swing.UIManager.setLookAndFeel(

@@ -30,18 +30,18 @@ A Linear Feedback Shift Register is used when you need to track a large counting
 Usage
 -----
 
-If you simply wish to use the program as is you need only to run dist/LFSR-Simulator.jar and fill in needed information. If you wish to use the LFSR class then you will need both LFSR.java and OptimalTaps.java. The basic operation of the class is as follows...
+If you simply wish to use the program as is you need only to run dist/LFSR-Simulator.jar and fill in needed information. If you wish to use the LFSR class then you will need LFSR.java, OptimalTaps.java, and the enums. The basic operation of the class is as follows...
 
     LFSR lfsr = new LFSR (); // Create a simple LFSR with default settings.(see below)
     lfsr.setNumberOfBits ( 10 );
-    lfsr.setGateType ("XNOR");
+    lfsr.setGateType (GateType.XNOR);
     lfsr.strobeClock (); // Move the LFSR forward one. 
     print ( lfsr.getBitsForward() ); // Print the new sequence.
 
 Default settings for the LFSR are as follows:
 
-* Number of Bits: 2
-* Taps: {1}
+* Number of Bits: 4
+* Taps: Optimal (4 and 3)
 * Gate: XOR
 * Feedback: Many to One
 * Extended: No, 2^n-1 length (at most)

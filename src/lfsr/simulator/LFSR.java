@@ -38,7 +38,7 @@ public class LFSR {
     private int Position = 0;
     private boolean Extended = false;
 
-    private static final int ACCEPTABLE_RUN_TIME = 50000000;
+    private static final int ACCEPTABLE_RUN_TIME = 5000;
     private long TimeOut;
     private boolean TimeOutFlag;
 
@@ -124,6 +124,15 @@ public class LFSR {
             return false;
         Taps = NewTaps;
         return true;
+    }
+    
+    public boolean setCurrentBits( boolean[] NewBits ) {
+        if ( (NewBits.length == NumberOfBits-1) || (NewBits.length == NumberOfBits) ) {
+            for ( int i = 0; i < NewBits.length; i++ )
+                Bits[i] = NewBits[i];
+            return true;
+        }
+        return false;
     }
 
     public final void setExtended(boolean val) {
@@ -300,6 +309,11 @@ public class LFSR {
                 strobeClockXNORM2O();
         }
      }
+    
+    public void strobeClock( int strobes ) {
+        for ( int i =0; i < strobes; i++)
+            strobeClock();
+    }
 
     public int CalculateSeqLength() {
         int length = 0;

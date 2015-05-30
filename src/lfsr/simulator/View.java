@@ -60,7 +60,7 @@ public class View extends javax.swing.JFrame {
                             + "Public License for more details           \n");
     }
     
-    private void generateButton(){
+    private void generateButton() {
         long generationTime = System.currentTimeMillis();
         UpdateLFSRSettings();
         UpdateTapsList();
@@ -637,10 +637,10 @@ public class View extends javax.swing.JFrame {
     }//GEN-LAST:event_FullSeqCheckBoxActionPerformed
 
     private void BitsTextAreaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BitsTextAreaActionPerformed
-        try{
+        try {
             lfsr.setNumberOfBits(Integer.parseInt(BitsTextArea.getText()));
         }
-        catch(NumberFormatException f){
+        catch (NumberFormatException f) {
             lfsr.setNumberOfBits(1);
         }
         UpdateTapsList();
@@ -651,12 +651,12 @@ public class View extends javax.swing.JFrame {
     //Update Functions
     //**********************************************
     
-    private void UpdateTapsList(){
+    private void UpdateTapsList() {
         lfsr.resetTimeOutFlag();
         javax.swing.DefaultListModel model = new javax.swing.DefaultListModel();
-        if(AutoRadio.isSelected())
+        if (AutoRadio.isSelected())
              lfsr.setTaps(lfsr.getOptimizedTaps());
-        else{
+        else {
             int[] adjArray = TapsList.getSelectedIndices();
             for(int i = 0; i < adjArray.length; i++)
                 adjArray[i] = adjArray[i] + 1;
@@ -672,48 +672,48 @@ public class View extends javax.swing.JFrame {
         TapsList.setSelectedIndices(adjArray);
     }
 
-    private void UpdateSeqList(){
+    private void UpdateSeqList() {
         SeqTextArea.setText("");
         lfsr.resetTimeOutFlag();
         int start, stop;
-        if(FullSeqCheckBox.isSelected()){
+        if (FullSeqCheckBox.isSelected()) {
             start = 0;
             stop = lfsr.getSequenceLength();
-        } else{
+        } else {
             start = getStart();
             stop = getStop();
         }
         SeqTextArea.append(lfsr.getBitSequence(start, stop, BitForward.isSelected()));
-        if(lfsr.getTimeOutFlag())
+        if (lfsr.getTimeOutFlag())
             SeqTextArea.append("***Timeout Warning Occured***");
         SeqTextArea.setCaretPosition(0);
         lfsr.resetLFSR();
     }
 
-    private void UpdateLFSRSettings(){
-        if(XorRadio.isSelected())
+    private void UpdateLFSRSettings() {
+        if (XorRadio.isSelected())
             lfsr.setGateType(GateType.XOR);
         else
             lfsr.setGateType(GateType.XNOR);
-        if(ManyToOneRadio.isSelected())
+        if (ManyToOneRadio.isSelected())
             lfsr.setFeedbackType(FeedbackType.MANY2ONE);
         else
             lfsr.setFeedbackType(FeedbackType.ONE2MANY);
-        if(nRadioButton.isSelected())
+        if (nRadioButton.isSelected())
             lfsr.setExtended(true);
         else
             lfsr.setExtended(false);
-        try{lfsr.setNumberOfBits(Integer.parseInt(BitsTextArea.getText()));}
-        catch(NumberFormatException e){ lfsr.setNumberOfBits(1);}
+        try {lfsr.setNumberOfBits(Integer.parseInt(BitsTextArea.getText()));}
+        catch (NumberFormatException e) { lfsr.setNumberOfBits(1);}
         lfsr.resetLFSR();
     }
 
-    private void UpdateCode(){
+    private void UpdateCode() {
         boolean IncludeReset = false;
         boolean IncludeFlag = false;
-        if(IncludeResetCheckBox.isSelected())
+        if (IncludeResetCheckBox.isSelected())
             IncludeReset = true;
-        if(IncludeFlagCheckBox.isSelected())
+        if (IncludeFlagCheckBox.isSelected())
             IncludeFlag = true;
         VerilogTextArea.setText(lfsr.toVerilog(IncludeReset,IncludeFlag,Integer.parseInt(FlagOnCycleTextArea.getText())));
         VHDLTextArea.setText(lfsr.toVHDL());
@@ -725,9 +725,9 @@ public class View extends javax.swing.JFrame {
         MyHDLTextArea.setCaretPosition(0);
     }
 
-    private void UpdateSeqLength(){
+    private void UpdateSeqLength() {
         lfsr.getSequenceLength();
-        if(lfsr.getTimeOutFlag())
+        if (lfsr.getTimeOutFlag())
             SeqLengthTextArea.setText("Time Out");
         else
             SeqLengthTextArea.setText(Integer.toString(lfsr.getSequenceLength()));
@@ -737,29 +737,29 @@ public class View extends javax.swing.JFrame {
     //Get Functions
     //**********************************************
     
-    private int getStop(){
+    private int getStop() {
         int stop;
-        try{
-            if(Integer.parseInt(UpperTextArea.getText())>lfsr.getSequenceLength())
+        try {
+            if (Integer.parseInt(UpperTextArea.getText())>lfsr.getSequenceLength())
                 stop = lfsr.getSequenceLength();
             else
                 stop = Integer.parseInt(UpperTextArea.getText());
         }
-        catch(NumberFormatException e){
+        catch (NumberFormatException e) {
             stop = lfsr.getSequenceLength();
         }
         return stop;
     }
 
-    private int getStart(){
+    private int getStart() {
         int start;
-        try{
-            if(Integer.parseInt(LowerTextArea.getText())<1)
+        try {
+            if (Integer.parseInt(LowerTextArea.getText())<1)
                 start = 0;
             else
                 start = Integer.parseInt(LowerTextArea.getText());
         }
-        catch(NumberFormatException e){start = 0;}
+        catch (NumberFormatException e) {start = 0;}
         return start;
     }
 
