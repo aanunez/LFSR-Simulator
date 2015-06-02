@@ -1,30 +1,29 @@
-// Author: Adam Nunez, adam.a.nunez@gmail.com
-// Copyright (C) 2014  name of author
-// 
-// This program is free software; you can redistribute it and/or
-// modify it under the terms of the GNU General Public License
-// as published by the Free Software Foundation; either version 2
-// of the License, or (at your option) any later version.
-// 
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
+/**
+ * Author: Adam Nunez, adam.a.nunez@gmail.com
+ * Copyright (C) 2014  name of author
+ * 
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ */
 
 package lfsr.simulator;
 
-
-/*
- * 
- * LFSR.java
- * Purpose: Simulates a XOR/XNOR, MANY-TO-ONE/ONE-TO-MANY LFSR.
- *          The taps for the LFSR are one indexed. Inspiration
- *          for this project comes from...
- *          http://fab.cba.mit.edu/classes/MIT/864.05/people/gdennis/
+/**
+ * LFSR
+ * Simulates a XOR/XNOR, MANY-TO-ONE/ONE-TO-MANY LFSR.
+ * The taps for the LFSR are one indexed. Inspiration
+ * for this project comes from...
+ * http://fab.cba.mit.edu/classes/MIT/864.05/people/gdennis/
  *
  * @author Adam Nunez, adam.a.nunez@gmail.com
- * @version 1.4 22 April 2015
- * 
+ * @version 1.5 30 May 2015
  */
 public class LFSR {
 
@@ -35,7 +34,6 @@ public class LFSR {
     private GateType Gate = GateType.XOR;
     private FeedbackType Feedback = FeedbackType.ONE2MANY;
     private int SeqLength = -1;
-    private int Position = 0;
     private boolean Extended = false;
 
     private static final int ACCEPTABLE_RUN_TIME = 5000;
@@ -46,9 +44,9 @@ public class LFSR {
     private boolean StrobeExtendedRestoreFlag;
     private boolean StrobeExtendedOnceFlag;
 
-    //**********************************************
+    //**************************************************************************
     //Constructors
-    //**********************************************
+    //**************************************************************************
 
     public LFSR(int NumberOfBits, int[] Taps, GateType Gate, FeedbackType Feedback, boolean isExtended) {
         SeqLength = -1;
@@ -89,18 +87,43 @@ public class LFSR {
         this(NumberOfBits, new int[0], Gate, FeedbackType.MANY2ONE, false);
     }
 
-    //**********************************************
+    //**************************************************************************
     // Set Functions ( & reset )
-    //**********************************************
+    //**************************************************************************
 
+   /**
+    * setGateType
+    * Sets the gate type of the LFSR.
+    *
+    * @param val  Gate type for the LFSR
+    * @see GateType
+    */
     public final void setGateType(GateType val) {
         Gate = val;
     }
 
+   /**
+    * setFeedbackType
+    * Sets the feedback type of the LFSR.
+    *
+    * @param val  feedback type for the LFSR
+    * @see FeedbackType
+    */
     public final void setFeedbackType(FeedbackType val) {
         Feedback = val;
     }
 
+   /**
+    * setNumberOfBits
+    * Sets the number of bits the LFSR should have. Checking is done to
+    * insure a value greater than zero. Initializes the current value of
+    * the LFSR to all zero if XNOR gate type and all one if XOR gate
+    * type. The Bit array stored by the LFSR is one larger than requested
+    * to facilitate the clock strobing operation.
+    *
+    * @param val  number of bits for the LFSR
+    * @return true if successful, else false
+    */
     public final boolean setNumberOfBits(int val) {
         SeqLength = -1;
         if (val <= 1)
@@ -115,6 +138,15 @@ public class LFSR {
         return true;
     }
 
+   /**
+    * setTaps
+    * Sets the given taps to active in the LFSR. Taps can be in any order and
+    * should not contain zero. The empty array sets the taps to optimal.
+    *
+    * @param NewTaps  array of taps to activate
+    * @return true if successful, else false
+    * @see OptimalTaps
+    */
     public final boolean setTaps(int[] NewTaps) {
         SeqLength = -1;
         if ( NewTaps.length == 0 )
@@ -126,52 +158,111 @@ public class LFSR {
         return true;
     }
     
+   /**
+    * setCurrentBits
+    * Sets the current value of the LFSR to that given. This function is 
+    * dangerous as the it does not reset the LFSR. The array should be the same
+    * or one shorted that the value of NumberOfBits.
+    *
+    * @param NewBits  array of bits to set, size of NumberOfBits or one less
+    * @return true if successful, else false
+    * @see setNumberOfBits
+    * @see resetLFSR
+    * @see CalculateSequenceLength
+    */
     public boolean setCurrentBits( boolean[] NewBits ) {
         if ( (NewBits.length == NumberOfBits-1) || (NewBits.length == NumberOfBits) ) {
-            for ( int i = 0; i < NewBits.length; i++ )
-                Bits[i] = NewBits[i];
+            System.arraycopy(NewBits, 0, Bits, 0, NewBits.length);
             return true;
         }
         return false;
     }
 
+   /**
+    * setExtended
+    * Sets the extended flag high or low for the LFSR.
+    *
+    * @param val  true if the LFSR is extended, else false
+    */
     public final void setExtended(boolean val) {
         Extended = val;
     }
 
+   /**
+    * resetTimeOutFlag
+    * resets the time out flag to zero. The flag may be set by certain
+    * operations that could take a long time.
+    * 
+    * @see getBitSequence
+    * @see getTimeOutFlag
+    * @see CalculateSequenceLength
+    */
     public final void resetTimeOutFlag() {
         TimeOutFlag = false;
     }
 
+   /**
+    * resetLFSR
+    * resets the the value of the LFSR and all flags that are set by the LFSR
+    * except time out. Sequence length is saved. The flag is used by 
+    * getBitSequence and CalculateSequenceLength.
+    * 
+    * @see setNumberOfBits
+    */
     public final void resetLFSR() {
         int SeqLenClone = SeqLength;
         setNumberOfBits(NumberOfBits);
         SeqLength = SeqLenClone;
-        Position = 0;
         StrobeExtendedRestoreFlag = false;
         StrobeExtendedOnceFlag = false;
     }
 
-    //**********************************************
+    //**************************************************************************
     // Get Functions
-    //**********************************************
+    //**************************************************************************
 
+   /**
+    * isExtended
+    * gets the value of the Extended setting of the LFSR
+    * 
+    * @return true if the LFSR is extended, else false
+    */
     public boolean isExtended() {
         return Extended;
     }
 
+   /**
+    * getNumberOfBits
+    * gets the size of the LFSR. This is not the length of the Bits array,
+    * the array is NumberOfBits+1 in size as one additional bit is needed
+    * for operations.
+    * 
+    * @return number of bits in the LFSR
+    * @see strobeClock
+    */
     public int getNumberOfBits() {
         return NumberOfBits;
     }
 
+   /**
+    * getTaps
+    * gets the array of active taps of the LFSR
+    * 
+    * @return array of the active taps in the LFSR sorted ascending
+    * @see strobeClock
+    */
     public int[] getTaps() {
         return Taps;
     }
 
-    public int getPosition() {
-        return Position;
-    }
-
+   /**
+    * getBitsForward
+    * gets a string of "1" and "0" that is th value of the LFSR with the most
+    * significant bit (MSB) on the left and least significant bit (LSB) on the
+    * right.
+    * 
+    * @return string of the value stored in the LFSR in binary
+    */
     public String getBitsForward() {
         String currentBits = BitsToString();
         if (Feedback == FeedbackType.MANY2ONE)
@@ -180,6 +271,14 @@ public class LFSR {
             return new StringBuilder(currentBits).reverse().toString();
     }
 
+   /**
+    * getBitsBackward
+    * gets a string of "1" and "0" that is th value of the LFSR with the most
+    * significant bit (MSB) on the right and least significant bit (LSB) on the
+    * left.
+    * 
+    * @return string of the value stored in the LFSR in binary
+    */
     public String getBitsBackward() {
         String currentBits = BitsToString();
         if (Feedback == FeedbackType.ONE2MANY)
@@ -188,25 +287,78 @@ public class LFSR {
             return new StringBuilder(currentBits).reverse().toString();
     }
 
+   /**
+    * getSequenceLength
+    * gets the length of the sequence generated by the current LFSR settings. If
+    * that value has not yet been calculated is will be by calling 
+    * CalculateSequenceLength
+    * 
+    * @return the length of the sequence generated by the current LFSR settings
+    * @see CalculateSequenceLength
+    */
     public int getSequenceLength() {
         if (SeqLength == -1)
-            return CalculateSeqLength();
+            return CalculateSequenceLength();
         return SeqLength;
     }
 
-    public int[] getOptimizedTaps(int NumberOfBits) {
-        int[][] x = OptimalTaps.getOptimalTaps(NumberOfBits);
+   /**
+    * getOptimizedTaps
+    * gets the first (shortest) solution for optimal taps for a LFSR of size 
+    * val. These values are stored in the class OptimalTaps and are precomputed.
+    * 
+    * @param val  the number of bits in an LFSR
+    * @return array of size 2 or 4 with optimal taps or null if taps are not known
+    * @see OptimalTaps
+    */
+    public int[] getOptimizedTaps(int val) {
+        int[][] x = OptimalTaps.getOptimalTaps(val);
         return x[0];
     }
 
+   /**
+    * getOptimizedTaps
+    * gets the first (shortest) solution for optimal taps for a LFSR of size 
+    * val. These values are stored in the class OptimalTaps and are precomputed.
+    * 
+    * @return array of size 2 or 4 with optimal taps or null if taps are not known
+    * @see OptimalTaps
+    */
     public int[] getOptimizedTaps() {
         return getOptimizedTaps(NumberOfBits);
     }
 
+   /**
+    * getTimeOutFlag
+    * gets the value of the timeout flag. The timeout flag is hardcoded to be
+    * set after 5 seconds. The flag is used by getBitSequence and 
+    * CalculateSequenceLength
+    * 
+    * @return true if timeout, else false
+    * @see OptimalTaps
+    * @see resetTimeOutFlag
+    * @see CalculateSequenceLength
+    * @see getBitSequence
+    */
     public boolean getTimeOutFlag() {
         return TimeOutFlag;
     }
 
+   /**
+    * getBitSequence
+    * gets the string of many bit sequences from depth start to stop with each
+    * sequence delimited by the system line separator. The sequences can be 
+    * displayed forward or backward. The method can cause a timeout flag.
+    * 
+    * @param start  starting depth of bit sequence
+    * @param stop  ending depth of bit sequence
+    * @param bitDirection  true if direction should be forward, false if backward
+    * @return true if timeout, else false
+    * @see getBitsForward
+    * @see getBitsBackward
+    * @see getTimeOutFlag
+    * @see resetTimeOutFlag
+    */
     public String getBitSequence(int start, int stop, boolean bitDirection) {
         initTimeOut(ACCEPTABLE_RUN_TIME);
         for(int i = 0; i < start; i++) {
@@ -230,9 +382,9 @@ public class LFSR {
         return text.toString();
     }
 
-    //**********************************************
+    //**************************************************************************
     // Core Operations
-    //**********************************************
+    //**************************************************************************
 
     private boolean preStrobeExtended() {
         boolean isXNOR = (Gate==GateType.XNOR);
@@ -293,6 +445,14 @@ public class LFSR {
             Bits[i] = Bits[i + 1];
     }
 
+   /**
+    * strobeClock
+    * strobes the clock once. Advances the LFSR given its current settings.
+    * The results can be observed with a display function.
+    *
+    * @see getBitsForward
+    * @see getBitsBackward
+    */
     public void strobeClock() {
         if (Extended && preStrobeExtended()) 
             return;
@@ -310,12 +470,32 @@ public class LFSR {
         }
      }
     
+   /**
+    * strobeClock
+    * strobes the clock strobes many times. Advances the LFSR given its current 
+    * settings. The results can be observed with a display function.
+    * 
+    * @param strobes  number of times to advance the LFSR
+    * @see getBitsForward
+    * @see getBitsBackward
+    */
     public void strobeClock( int strobes ) {
         for ( int i =0; i < strobes; i++)
             strobeClock();
     }
 
-    public int CalculateSeqLength() {
+   /**
+    * CalculateSequenceLength
+    * Calculates the sequence length of the LFSR with current settings. Unlike
+    * getSequenceLength, this method does not check the previously calculated
+    * and saved value.
+    * 
+    * @return sequence length of the LFSR with current settings
+    * @see getBitsForward
+    * @see getBitsBackward
+    * @see getSequenceLength
+    */
+    public int CalculateSequenceLength() {
         int length = 0;
         boolean[] BitsClone = Bits.clone();
         setNumberOfBits(NumberOfBits);
@@ -337,10 +517,21 @@ public class LFSR {
         return SeqLength;
     }
 
-    //**********************************************
+    //**************************************************************************
     // To Language Functions
-    //**********************************************
+    //**************************************************************************
 
+   /**
+    * toVerilog
+    * Calculates the sequence length of the LFSR with current settings. Unlike
+    * getSequenceLength, this method does not check the previously calculated
+    * and saved value.
+    * 
+    * @param IncludeReset  true if generated code should include a reset ability
+    * @param IncludeFlag  true if generated code should include flag
+    * @param CycleNumb  sequence number to assert flag on 
+    * @return string of Verilog code describing the current LFSR
+    */
     public String toVerilog(boolean IncludeReset, boolean IncludeFlag, int CycleNumb) {
         StringBuilder Verilog = new StringBuilder();
         String depth = "        ";
@@ -504,21 +695,39 @@ public class LFSR {
         return Verilog.toString();
     }
 
+   /**
+    * toVHDL
+    * Not yet used.
+    * 
+    * @return string "Work in progress..."
+    */
     public String toVHDL() {
         return "Work in progress...";
     }
 
+   /**
+    * toAHDL
+    * Not yet used.
+    * 
+    * @return string "Work in progress..."
+    */
     public String toAHDL() {
         return "Work in progress...";
     }
     
+   /**
+    * toMyHDL
+    * Not yet used.
+    * 
+    * @return string "Work in progress..."
+    */
     public String toMyHDL() {
         return "Work in progress...";
     }
 
-    //**********************************************
+    //**************************************************************************
     // Miscellaneous Private Functions
-    //**********************************************
+    //**************************************************************************
 
     private String BitsToString() {
         String x = java.util.Arrays.toString(Bits)

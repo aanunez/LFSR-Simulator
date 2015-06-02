@@ -1,37 +1,38 @@
-// Author: Adam Nunez, adam.a.nunez@gmail.com
-// Copyright (C) 2014  name of author
-// 
-// This program is free software; you can redistribute it and/or
-// modify it under the terms of the GNU General Public License
-// as published by the Free Software Foundation; either version 2
-// of the License, or (at your option) any later version.
-// 
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
+/**
+ * Author: Adam Nunez, adam.a.nunez@gmail.com
+ * Copyright (C) 2014  name of author
+ * 
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ */
 
 package lfsr.simulator;
 
 /*
- *
- * OptimalTaps.java
- * Purpose: Give a number of bits for an LFSR the class returns the optimal
- *          taps to insure maximum length. For all bit lengths there exists a 
- *          tap solution and/or a four tap solution, in the case where both
- *          exist the two tap solution in returned. Data is lifted
- *          from...
- *          http://www.eej.ulst.ac.uk/~ian/modules/EEE515/files/old_files/lfsr/lfsr_table.pdf
+ * OptimalTaps
+ * Given a number of bits for an LFSR the class returns the optimal
+ * taps to insure maximum length. For all bit lengths there exists a 
+ * tap solution and/or a four tap solution, in the case where both
+ * exist the two tap solution in returned. Data is lifted
+ * from...
+ * http://www.eej.ulst.ac.uk/~ian/modules/EEE515/files/old_files/lfsr/lfsr_table.pdf
  *
  * @author Adam Nunez, adam.a.nunez@gmail.com
  * @version 1.1 7 May 2014
- *
  */
 
 public class OptimalTaps {
 
     /**
      * Find the optimal taps for an LFSR to insure maximum count length.
+     * 
      * @param   NumberOfBits    The number of bits in the LFSR
      * @return  A 2D integer array containing two possible solutions each with
      *          two or four elements that describe the optimal taps for the LFSR.

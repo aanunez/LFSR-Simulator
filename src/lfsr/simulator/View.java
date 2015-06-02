@@ -1,29 +1,27 @@
-// Author: Adam Nunez, adam.a.nunez@gmail.com
-// Copyright (C) 2014  name of author
-// 
-// This program is free software; you can redistribute it and/or
-// modify it under the terms of the GNU General Public License
-// as published by the Free Software Foundation; either version 2
-// of the License, or (at your option) any later version.
-// 
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
+/**
+ * Author: Adam Nunez, adam.a.nunez@gmail.com
+ * Copyright (C) 2014  name of author
+ * 
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ */
 
 package lfsr.simulator;
 
 /*
- *
- * View.java
- * Purpose: Its called View, what do you think it does? Ok, well its also
- *          a controller.
+ * View
+ * Its called View, what do you think it does? Ok, well its also a controller.
  *
  * @author Adam Nunez, adam.a.nunez@gmail.com
- * @version 1.2 17 May 2014
- *
+ * @version 1.3 30 May 2014
  */
-
 public class View extends javax.swing.JFrame {
 
     LFSR lfsr = new LFSR();
