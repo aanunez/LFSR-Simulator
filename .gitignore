@@ -10,3 +10,4 @@ nbproject/private/
 *.DS_Store
 *.lock
 *.txt
+dist/javadoc/
